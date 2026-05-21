@@ -4,7 +4,7 @@ function borgMountArchive {
 	local _REQUIRED=(
 		BORG_REPO
 		ARCHIVE_NAME
-		MOUNT_POINT
+		CFG_MOUNT_POINT
 	)
     
 	# check required vars
@@ -16,23 +16,23 @@ function borgMountArchive {
     done
 
     # Create mount point if it doesn't exist
-    if [ ! -d "${MOUNT_POINT}" ]; then
-        echo -e "Creating mountpoint: ${GREEN}${MOUNT_POINT}${RESET}"
-        mkdir -p "${MOUNT_POINT}"
+    if [ ! -d "${CFG_MOUNT_POINT}" ]; then
+        echo -e "Creating mountpoint: ${GREEN}${CFG_MOUNT_POINT}${RESET}"
+        mkdir -p "${CFG_MOUNT_POINT}"
     fi
 
     # Mount the chosen archive
-    _MOUNT_CMD="borg mount ${BORG_REPO}::${ARCHIVE_NAME} ${MOUNT_POINT} -o allow_other"
+    _MOUNT_CMD="borg mount ${BORG_REPO}::${ARCHIVE_NAME} ${CFG_MOUNT_POINT} -o allow_other"
     echo "Mounting archive with cmd:"
     echo -e "${GREEN}${_MOUNT_CMD}${RESET}"
     ${_MOUNT_CMD}
 
     if [ ${?} -eq 0 ]; then
-        echo "Archive mounted successfully at ${MOUNT_POINT}"
+        echo "Archive mounted successfully at ${CFG_MOUNT_POINT}"
         echo "Open with:"
-        echo "nautilus ${MOUNT_POINT} &"
+        echo "nautilus ${CFG_MOUNT_POINT} &"
         echo "Unmount with:"
-        echo "umount ${MOUNT_POINT}"
+        echo "umount ${CFG_MOUNT_POINT}"
     else
         echo "Error: Failed to mount the archive."
     fi
