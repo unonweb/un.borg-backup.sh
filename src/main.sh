@@ -35,6 +35,7 @@ source "${SCRIPT_DIR}/lib/read_file_to_map.sh"
 source "${SCRIPT_DIR}/lib/select_borg_archive.sh"
 source "${SCRIPT_DIR}/lib/select_borg_repo.sh"
 source "${SCRIPT_DIR}/lib/select_path_to_repos.sh"
+source "${SCRIPT_DIR}/lib/borg_mount_archive.sh"
 
 function main {
 
@@ -143,59 +144,61 @@ function main {
 
         case ${opt} in
 
-        "Backup")
-            borg_backup
-            ;;
+			"Backup")
+				borg_backup
+				;;
 
-        "List archives")
-            echo -e "Listing archives in ${BORG_REPO} ..."
-			echo -en "${GREEN}"
-            borg list ${BORG_REPO}
-			echo -en "${RESET}"
-            ;;
+			"List archives")
+				echo -e "Listing archives in ${BORG_REPO} ..."
+				echo -en "${GREEN}"
+				borg list ${BORG_REPO}
+				echo -en "${RESET}"
+				;;
 
-        "Prune")
-			borg_prune
-            ;;
+			"Prune")
+				borg_prune
+				;;
 
-        "Compact")
-            # actually free repo disk space by compacting segments
-            echo -e "${BOLD}Compacting ${GREEN}${BORG_REPO}${RESET} ..."
-            borg compact "${BORG_REPO}"
-            ;;
+			"Compact")
+				# actually free repo disk space by compacting segments
+				echo -e "${BOLD}Compacting ${GREEN}${BORG_REPO}${RESET} ..."
+				borg compact "${BORG_REPO}"
+				;;
 
-        "Mount")
-            select_borg_archive
-			export ARCHIVE_NAME BORG_REPO CFG_MOUNT_POINT \
-			"${SCRIPT_DIR}/run/borg.mount-archive.sh"
-            ;;
-		
-		"Delete")
-			#select_borg_archive
-			echo -e "${BOLD}Enter archive to delete${RESET}"
-			read -p ">> "
-			if [[ -n ${REPLY} ]]; then
-				ARCHIVE_NAME=${REPLY}
-				borg delete --list --stats --progress ${BORG_REPO}::${ARCHIVE_NAME}
-				echo "When deleting archives, repository disk space is not freed until you run borg compact."
-			else
-				echo "Error: Empty REPLY"
-			fi
-			;;
+			"Mount")
+				# Set ARCHIVE_NAME
+				select_borg_archive || { echo "Error: Failed to set ARCHIVE_NAME"; continue; }
+				borg_mount_archive
+				#export ARCHIVE_NAME BORG_REPO CFG_MOUNT_POINT \
+				#"${SCRIPT_DIR}/run/borg.mount-archive.sh"
+				;;
+			
+			"Delete")
+				#select_borg_archive
+				echo -e "${BOLD}Enter archive to delete${RESET}"
+				read -p ">> "
+				if [[ -n ${REPLY} ]]; then
+					ARCHIVE_NAME=${REPLY}
+					borg delete --list --stats --progress ${BORG_REPO}::${ARCHIVE_NAME}
+					echo "When deleting archives, repository disk space is not freed until you run borg compact."
+				else
+					echo "Error: Empty REPLY"
+				fi
+				;;
 
-		"Change repo")
-			select_borg_repo
-			;;
+			"Change repo")
+				select_borg_repo
+				;;
 
-		"Info")
-			echo "---"
-			borg info "${BORG_REPO}"
-			;;
+			"Info")
+				echo "---"
+				borg info "${BORG_REPO}"
+				;;
 
-        *)
-            echo "Invalid selection: ${opt}"
-            sleep 1
-            ;;
+			*)
+				echo "Invalid selection: ${opt}"
+				sleep 1
+				;;
 
         esac
     done

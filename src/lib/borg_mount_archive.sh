@@ -1,14 +1,14 @@
-function borgMountArchive {
+function borg_mount_archive {
     
-	local _MOUNT_CMD
-	local _REQUIRED=(
+	local mount_cmd
+	local required=(
 		BORG_REPO
 		ARCHIVE_NAME
 		CFG_MOUNT_POINT
 	)
     
-	# check required vars
-    for var in "${_REQUIRED[@]}"  ; do
+	# CHECK VARS
+    for var in "${required[@]}"  ; do
         if [[ -z "${!var}" ]]; then
             echo "Error: ${var} is not set or is empty." >&2
 			return 1
@@ -22,20 +22,18 @@ function borgMountArchive {
     fi
 
     # Mount the chosen archive
-    _MOUNT_CMD="borg mount ${BORG_REPO}::${ARCHIVE_NAME} ${CFG_MOUNT_POINT} -o allow_other"
+    mount_cmd="borg mount ${BORG_REPO}::${ARCHIVE_NAME} ${CFG_MOUNT_POINT} -o allow_other"
     echo "Mounting archive with cmd:"
-    echo -e "${GREEN}${_MOUNT_CMD}${RESET}"
-    ${_MOUNT_CMD}
+    echo -e "${mount_cmd}"
+    ${mount_cmd}
 
     if [ ${?} -eq 0 ]; then
-        echo "Archive mounted successfully at ${CFG_MOUNT_POINT}"
-        echo "Open with:"
-        echo "nautilus ${CFG_MOUNT_POINT} &"
-        echo "Unmount with:"
+        echo "Archive mounted successfully at ${GREEN}${CFG_MOUNT_POINT}${RESET}"
+        echo "When you finish don't forget to unmount with:"
         echo "umount ${CFG_MOUNT_POINT}"
+		return 0
     else
         echo "Error: Failed to mount the archive."
+		return 1
     fi
 }
-
-borgMountArchive ${@}
