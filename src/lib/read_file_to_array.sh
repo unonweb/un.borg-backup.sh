@@ -1,4 +1,4 @@
-function readFileToArray() { # array ${file}
+function read_file_to_array { # array ${file}
     local -n result=${1}
     local file=${2}
     local lines=()
