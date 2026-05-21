@@ -1,15 +1,10 @@
-function borgBackupSystem {
+function borg_backup_system {
 
-	local _PATH_BACKUP="/etc /root /var /opt"
+	local path_backup="/etc /root /var /opt"
 
-	if [[ -z ${BORG_REPO} ]]; then
-		echo "BORG_REPO is empty: ${BORG_REPO}"
-		exit 1
-	fi
+	echo "Starting to backup ${path_backup}"
 
-	echo "Starting to backup ${_PATH_BACKUP}"
-
-	sudo --set-home --preserve-env borg create ${BORG_REPO}::'{hostname}-{now}' "${_PATH_BACKUP}" \
+	sudo --set-home --preserve-env borg create ${BORG_REPO}::'{hostname}-{now}' "${path_backup}" \
 		--progress \
 		--verbose \
 		--filter AME \
@@ -28,4 +23,4 @@ function borgBackupSystem {
 	EXIT_CODE_BACKUP=${?}
 }
 
-borgBackupSystem ${@}
+borg_backup_system ${@}

@@ -1,20 +1,8 @@
-function borgBackupHome {
+function borg_backup_home {
 	# REQUIRES:
 	# - BORG_REPO
 
 	local path_backup="/home/${USER}"
-
-	local required=(
-		BORG_REPO
-	)
-    
-	# check required vars
-    for var in "${required[@]}"  ; do
-        if [[ -z "${!var}" ]]; then
-            echo "Error: ${var} is not set or empty." >&2
-			return 1
-        fi
-    done
 
 	echo "Starting to backup ${GREEN}${path_backup}${RESET} ..."
 
@@ -41,4 +29,4 @@ function borgBackupHome {
 	EXIT_CODE_BACKUP=$?
 }
 
-borgBackupHome ${@}
+borg_backup_home ${@}

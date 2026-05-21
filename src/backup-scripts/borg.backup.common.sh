@@ -1,15 +1,12 @@
-function borgBackupCommon {
-	# requires BORG_REPO to be set
-	local _PATH_BACKUP="/media/common"
+function borg_backup_common {
+	# REQUIRES:
+	# - BORG_REPO
 
-	if [[ -z ${BORG_REPO} ]]; then
-		echo "BORG_REPO is empty: ${BORG_REPO}"
-		exit 1
-	fi
+	local path_backup="/media/common"
 
-	echo "Starting to backup ${_PATH_BACKUP}"
+	echo "Starting to backup ${path_backup}"
 
-	borg create "${BORG_REPO}"::'{hostname}-{now}' ${_PATH_BACKUP} \
+	borg create "${BORG_REPO}"::'{hostname}-{now}' ${path_backup} \
 		--progress \
 		--verbose \
 		--filter AME \
@@ -20,7 +17,7 @@ function borgBackupCommon {
 		--exclude-caches \
 		--exclude '.Trash-1000'
 
-	EXIT_CODE_BACKUP=$?
+	EXIT_CODE_BACKUP=${?}
 }
 
-borgBackupCommon ${@}
+borg_backup_common ${@}

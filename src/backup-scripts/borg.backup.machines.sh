@@ -1,27 +1,17 @@
-function borgBackupMachines {
+function borg_backup_machines {
 	# requires 
 	# - BORG_REPO
 
-	local _PATH_BACKUP
-	local _REPO_NAME
+	local path_backup
+	local repo_name
 
-	if [[ -z ${BORG_REPO} ]]; then
-		echo "BORG_REPO is empty: ${BORG_REPO}"
-		exit 1
-	fi
-
-	_REPO_NAME=${BORG_REPO##*/} # /media/frida/borg_backup/machines.ghost-ub --> machines.ghost-ub
-	_REPO_NAME=${_REPO_NAME//./\/} # machines.ghost-ub --> machines/ghost-ub
-	_PATH_BACKUP="/var/lib/${_REPO_NAME}" # --> /var/lib/machines/ghost-ub
-
-	if ! sudo test -e "${_PATH_BACKUP}"; then
-		echo "[borgBackupMachines] ERROR: Path does not exist: ${_PATH_BACKUP}"
-		return 1
-	fi
+	repo_name=${BORG_REPO##*/} # /media/frida/borg_backup/machines.ghost-ub --> machines.ghost-ub
+	repo_name=${repo_name//./\/} # machines.ghost-ub --> machines/ghost-ub
+	path_backup="/var/lib/${repo_name}" # --> /var/lib/machines/ghost-ub
 	
-	echo "Starting to backup ${_PATH_BACKUP}"
+	echo "Starting to backup ${path_backup}"
 
-	sudo borg create "${BORG_REPO}"::'{hostname}-{now}' ${_PATH_BACKUP} \
+	sudo borg create "${BORG_REPO}"::'{hostname}-{now}' ${path_backup} \
 		--progress \
 		--verbose \
 		--filter AME \
@@ -31,19 +21,19 @@ function borgBackupMachines {
 		--compression lz4 \
 		--exclude-caches \
 		--exclude '.Trash-1000' \
-		--exclude "${_PATH_BACKUP}/dev" \
-		--exclude "${_PATH_BACKUP}/mnt" \
-		--exclude "${_PATH_BACKUP}/proc" \
-		--exclude "${_PATH_BACKUP}/run" \
-		--exclude "${_PATH_BACKUP}/sys" \
-		--exclude "${_PATH_BACKUP}/tmp" \
-		--exclude "${_PATH_BACKUP}/var/tmp" \
-		--exclude "${_PATH_BACKUP}/var/run" \
-		--exclude "${_PATH_BACKUP}/var/cache" \
-		--exclude "${_PATH_BACKUP}/var/lock"
+		--exclude "${path_backup}/dev" \
+		--exclude "${path_backup}/mnt" \
+		--exclude "${path_backup}/proc" \
+		--exclude "${path_backup}/run" \
+		--exclude "${path_backup}/sys" \
+		--exclude "${path_backup}/tmp" \
+		--exclude "${path_backup}/var/tmp" \
+		--exclude "${path_backup}/var/run" \
+		--exclude "${path_backup}/var/cache" \
+		--exclude "${path_backup}/var/lock"
 		
 
 	EXIT_CODE_BACKUP=${?}
 }
 
-borgBackupMachines ${@}
+borg_backup_machines ${@}
