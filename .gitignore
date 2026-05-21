@@ -1,2 +1,2 @@
-src/config.cfg
+config.cfg
 systemd/run.sh.j2
