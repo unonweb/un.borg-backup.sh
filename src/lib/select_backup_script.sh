@@ -31,7 +31,7 @@ function select_backup_script {
 	local best_match=$(find_best_match "${REPO_NAME}" "${script_names[@]}")
 	if [[ -n ${best_match} ]]; then
 		# USER CONFIRM
-		echo "${GREEN}Use this one: ${best_match}${RESET}? (Y|n)"
+		echo "${BOLD}Use this one: ${GREEN}${best_match}${RESET}? (Y|n)"
 		read -p ">> "
 		if [[ ${REPLY} == "y" || -z ${REPLY} ]]; then
 			script_name_chosen="${best_match}"
