@@ -18,7 +18,7 @@ export CYAN="\e[36m"
 
 PATH_CONFIG="${SCRIPT_PARENT}/config.cfg"
 PATH_DEFAULTS="${SCRIPT_PARENT}/defaults.cfg"
-PATH_BACKUP_SCRIPTS="${SCRIPT_DIR}/backup-scripts"
+PATH_BACKUP_SCRIPTS="${SCRIPT_DIR}/run"
 
 # globals dynamic
 BORG_REPO="" # path of selected repo
