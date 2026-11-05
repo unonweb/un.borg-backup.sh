@@ -1,7 +1,9 @@
-function borg_backup_home {
-	# REQUIRES:
-	# - BORG_REPO
+# REQUIRES
+# --------
+# - BORG_REPO
 
+function borg_backup_home {
+	
 	local path_backup="/home/${USER}"
 
 	echo "Starting to backup ${GREEN}${path_backup}${RESET} ..."

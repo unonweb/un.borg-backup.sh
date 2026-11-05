@@ -1,12 +1,15 @@
+# REQUIRES
+# --------
+# - BORG_REPO
+
 function borg_backup_machines {
-	# requires 
-	# - BORG_REPO
 
 	local path_backup
 	local repo_name
 
 	repo_name=${BORG_REPO##*/} # /media/frida/borg_backup/machines.ghost-ub --> machines.ghost-ub
 	repo_name=${repo_name//./\/} # machines.ghost-ub --> machines/ghost-ub
+	
 	path_backup="/var/lib/${repo_name}" # --> /var/lib/machines/ghost-ub
 	
 	echo "Starting to backup ${path_backup}"

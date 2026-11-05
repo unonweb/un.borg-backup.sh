@@ -1,6 +1,8 @@
+# REQUIRES
+# --------
+# - BORG_REPO
+
 function borg_backup_common {
-	# REQUIRES:
-	# - BORG_REPO
 
 	local path_backup="/media/common"
 
