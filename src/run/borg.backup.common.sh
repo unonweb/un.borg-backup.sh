@@ -17,7 +17,13 @@ function borg_backup_common {
 		--lock-wait 600 \
 		--compression lz4 \
 		--exclude-caches \
-		--exclude '.Trash-1000'
+		--exclude '**/.Trash-1000' \
+		--exclude 'software/linux/os' \
+		--exclude 'software/win/os' \
+		--exclude '**/mkosi.output' \
+		--exclude '**/mkosi.cache' \
+		--exclude '**/.parcel-cache' \
+		--exclude '**/node_modules'
 
 	EXIT_CODE_BACKUP=${?}
 }
