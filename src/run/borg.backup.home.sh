@@ -18,6 +18,7 @@ function borg_backup_home {
 		--compression lz4 \
 		--exclude-caches \
 		--exclude '**/.cache' \
+		--exclude '**/cache' \
 		--exclude "${path_backup}.cache" \
 		--exclude "${path_backup}/.npm/_logs" \
 		--exclude "${path_backup}/.npm/_cacache" \
