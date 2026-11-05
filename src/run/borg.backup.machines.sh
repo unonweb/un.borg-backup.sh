@@ -24,16 +24,16 @@ function borg_backup_machines {
 		--compression lz4 \
 		--exclude-caches \
 		--exclude '.Trash-1000' \
-		--exclude "${path_backup}/dev" \
-		--exclude "${path_backup}/mnt" \
-		--exclude "${path_backup}/proc" \
-		--exclude "${path_backup}/run" \
-		--exclude "${path_backup}/sys" \
-		--exclude "${path_backup}/tmp" \
-		--exclude "${path_backup}/var/tmp" \
-		--exclude "${path_backup}/var/run" \
-		--exclude "${path_backup}/var/cache" \
-		--exclude "${path_backup}/var/lock"
+		--exclude "dev" \
+		--exclude "mnt" \
+		--exclude "proc" \
+		--exclude "run" \
+		--exclude "sys" \
+		--exclude "tmp" \
+		--exclude "var/tmp" \
+		--exclude "var/run" \
+		--exclude "var/cache" \
+		--exclude "var/lock"
 		
 
 	EXIT_CODE_BACKUP=${?}

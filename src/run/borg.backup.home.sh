@@ -17,15 +17,15 @@ function borg_backup_home {
 		--lock-wait 600 \
 		--compression lz4 \
 		--exclude-caches \
-		--exclude "${path_backup}/.cache" \
-		--exclude "${path_backup}/.npm/_logs" \
-		--exclude "${path_backup}/.npm/_cacache" \
-		--exclude "${path_backup}/.config/Code/Cache" \
-		--exclude "${path_backup}/.config/Code/CachedData" \
-		--exclude "${path_backup}/.config/Code/Service Worker/ScriptCache" \
-		--exclude "${path_backup}/.config/Code/User/History" \
-		--exclude "${path_backup}/.config/libreoffice/*/cache" \
-		--exclude "${path_backup}/.local/share/Trash" \
+		--exclude ".cache" \
+		--exclude ".npm/_logs" \
+		--exclude ".npm/_cacache" \
+		--exclude ".config/Code/Cache" \
+		--exclude ".config/Code/CachedData" \
+		--exclude ".config/Code/Service Worker/ScriptCache" \
+		--exclude ".config/Code/User/History" \
+		--exclude ".config/libreoffice/*/cache" \
+		--exclude ".local/share/Trash" \
 
 	#2>> ${SCRIPT_NAME}.log
 	EXIT_CODE_BACKUP=$?
