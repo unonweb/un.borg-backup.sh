@@ -19,14 +19,13 @@ function borg_backup_home {
 		--exclude-caches \
 		--exclude '**/.cache' \
 		--exclude '**/cache' \
+		--exclude '**/Cache' \
 		--exclude "${path_backup}.cache" \
 		--exclude "${path_backup}/.npm/_logs" \
 		--exclude "${path_backup}/.npm/_cacache" \
-		--exclude "${path_backup}/.config/Code/Cache" \
 		--exclude "${path_backup}/.config/Code/CachedData" \
 		--exclude "${path_backup}/.config/Code/Service Worker/ScriptCache" \
 		--exclude "${path_backup}/.config/Code/User/History" \
-		--exclude "${path_backup}/.config/libreoffice/*/cache" \
 		--exclude "${path_backup}/.local/share/Trash" \
 
 	#2>> ${SCRIPT_NAME}.log
